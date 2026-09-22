@@ -3,128 +3,111 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Khảo sát chuyển đổi số &amp; dữ liệu — Phòng Chức năng | Lead Consulting</title>
-<meta name="description" content="Phiếu khảo sát hiện trạng và nhu cầu chuyển đổi số & dữ liệu, dành cho các phòng chức năng.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Phiếu khảo sát hiện trạng và nhu cầu chuyển đổi số &amp; dữ liệu - Phòng Chức năng</title>
+<meta name="description" content="Phiếu khảo sát hiện trạng và nhu cầu chuyển đổi số & dữ liệu dành cho các Phòng Chức năng.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23F7941D'/%3E%3C/svg%3E">
 <style>
+  /* Dùng lại đúng bảng màu và font của form trong Apps Script */
   :root{
-    --orange:#F5821F;
-    --ink:#1B2330;
-    --muted:#5C6773;
-    --line:#E3E7EC;
-    --surface:#FFFFFF;
-    --page:#F2F4F7;
-    --form-height:1600px;
+    --bg:#f5f7fb;
+    --muted:#667085;
+    --line:#dfe3ea;
   }
+
   *{box-sizing:border-box}
-  html,body{margin:0}
+
+  html,body{
+    height:100%;
+    margin:0;
+    background:var(--bg);
+  }
+
   body{
-    background:var(--page);
-    color:var(--ink);
-    font-family:"Be Vietnam Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    font-size:16px;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-  .masthead{
-    background:var(--surface);
-    border-bottom:1px solid var(--line);
-    box-shadow:inset 0 -3px 0 var(--orange);
-  }
-  .masthead .inner{
-    max-width:880px;margin:0 auto;padding:18px 24px;
-    display:flex;align-items:center;gap:12px;
-  }
-  .masthead img{height:34px;width:auto;display:block}
-  .wordmark{font-weight:600;letter-spacing:.02em;color:var(--orange)}
-
-  main{max-width:880px;margin:0 auto;padding:36px 24px 64px}
-  h1{font-size:1.55rem;font-weight:600;margin:0 0 10px;letter-spacing:-.01em;max-width:24ch}
-  .lede{margin:0 0 28px;color:var(--muted);max-width:62ch}
-
-  .frame{
-    position:relative;
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:10px;
+    font-family:Arial,Helvetica,sans-serif;
+    color:var(--muted);
     overflow:hidden;
   }
+
+  .frame-wrap{
+    position:relative;
+    width:100%;
+    height:100vh;
+    height:100dvh;   /* tránh lỗi thanh địa chỉ trên mobile */
+  }
+
   iframe{
-    display:block;width:100%;height:var(--form-height);border:0;
-    opacity:0;transition:opacity .25s ease;
+    display:block;
+    width:100%;
+    height:100%;
+    border:0;
+    opacity:0;
+    transition:opacity .2s ease;
   }
   iframe.ready{opacity:1}
-  @media (prefers-reduced-motion:reduce){iframe{transition:none}}
 
-  .placeholder{
-    position:absolute;inset:0;
-    display:flex;align-items:center;justify-content:center;
-    color:var(--muted);font-size:.95rem;
-    background:var(--surface);
+  @media (prefers-reduced-motion:reduce){
+    iframe{transition:none}
   }
-  .placeholder[hidden]{display:none}
 
-  .note{margin:22px 0 0;color:var(--muted);font-size:.9rem;max-width:62ch}
-  .note a{color:var(--orange)}
+  .loading{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    background:var(--bg);
+    font-size:14px;
+  }
+  .loading[hidden]{display:none}
 
-  @media (max-width:640px){
-    main{padding:24px 16px 48px}
-    :root{--form-height:2200px}
-    h1{font-size:1.3rem}
-    .frame{border-radius:8px}
+  .spinner{
+    width:26px;
+    height:26px;
+    border:3px solid var(--line);
+    border-top-color:#f7941d;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+  }
+
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  @media (prefers-reduced-motion:reduce){
+    .spinner{animation:none}
   }
 </style>
 </head>
 <body>
 
-<header class="masthead">
-  <div class="inner">
-    <!-- Thay logo.png bằng file logo thật đặt cùng thư mục; thiếu file thì dòng chữ vẫn hiển thị -->
-    <img src="logo.png" alt="Lead Consulting" onerror="this.remove()">
-    <span class="wordmark">Lead Consulting</span>
-  </div>
-</header>
-
-<main>
-  <h1>Phiếu khảo sát hiện trạng và nhu cầu chuyển đổi số &amp; dữ liệu</h1>
-  <p class="lede">Phiếu dành cho các phòng chức năng. Anh/chị vui lòng dành ít phút điền các thông tin dưới đây. Kết quả khảo sát giúp Lead Consulting đánh giá hiện trạng dữ liệu của đơn vị và đề xuất hướng triển khai phù hợp. Thông tin chỉ dùng cho mục đích tư vấn.</p>
-
-  <div class="frame">
-    <div class="placeholder" id="placeholder">Đang tải biểu mẫu…</div>
-    <iframe
-      id="form-frame"
-      title="Phiếu khảo sát chuyển đổi số và dữ liệu — Phòng Chức năng"
-      src="https://script.google.com/macros/s/AKfycbwvdxQnYje3iBBwXMsW5xno3mjbC4kB8bUuAPpBVrxOaxnXahqrOPQKjGXS6EopTk4v/exec"
-      referrerpolicy="no-referrer-when-downgrade"></iframe>
+<div class="frame-wrap">
+  <div class="loading" id="loading">
+    <div class="spinner" aria-hidden="true"></div>
+    <div>Đang tải phiếu khảo sát…</div>
   </div>
 
-  <!-- Thay địa chỉ email bên dưới bằng email hỗ trợ thật -->
-  <p class="note">Biểu mẫu không hiển thị hoặc gặp lỗi khi gửi? Liên hệ <a href="mailto:contact@leadconsulting.vn">contact@leadconsulting.vn</a>.</p>
-</main>
+  <iframe
+    id="form-frame"
+    title="Phiếu khảo sát hiện trạng và nhu cầu chuyển đổi số và dữ liệu - Phòng Chức năng"
+    src="https://script.google.com/macros/s/AKfycbwvdxQnYje3iBBwXMsW5xno3mjbC4kB8bUuAPpBVrxOaxnXahqrOPQKjGXS6EopTk4v/exec"
+    allow="clipboard-write"
+    referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
 
 <script>
   var frame = document.getElementById('form-frame');
-  var placeholder = document.getElementById('placeholder');
+  var loading = document.getElementById('loading');
 
   frame.addEventListener('load', function () {
-    placeholder.hidden = true;
+    loading.hidden = true;
     frame.classList.add('ready');
   });
 
-  // Nhận chiều cao thật của form để bỏ thanh cuộn lồng nhau.
-  // Chỉ hoạt động khi đã thêm đoạn gửi chiều cao ở cuối file HTML phía Apps Script.
-  window.addEventListener('message', function (event) {
-    var host;
-    try { host = new URL(event.origin).hostname; } catch (e) { return; }
-    if (!/\.googleusercontent\.com$/.test(host)) return;
-
-    var data = event.data;
-    if (data && data.type === 'lead-form-height' && typeof data.height === 'number') {
-      frame.style.height = Math.max(400, data.height + 32) + 'px';
-    }
-  });
+  // Dự phòng: nếu sự kiện load không bắn ra, vẫn bỏ lớp che sau 8 giây
+  setTimeout(function () {
+    loading.hidden = true;
+    frame.classList.add('ready');
+  }, 8000);
 </script>
 
 </body>
